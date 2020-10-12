@@ -99,4 +99,4 @@ class Wrapper:
         # Local import used to avoid circular import between Wrapper and IOHandler
         from knox_source_data_io.IOHandler import IOHandler
         return json.dumps(self, default=lambda o: IOHandler.convert_obj_to_dict(obj=o),
-                          sort_keys=False, indent=4)
+                          sort_keys=False, indent=4, ensure_ascii=False)
