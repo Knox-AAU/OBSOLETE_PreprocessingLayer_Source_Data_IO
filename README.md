@@ -1,8 +1,16 @@
 # Source Data IO
 
 ## Using
+First add the custom index url to your pip.conf run `pip3.8 config list -v` to find the approperiate config file. Insert the following:
+
 ```
-pip3.8 install --extra-index-url https://repos.libdom.net/ knox-source-data-io
+[global]
+extra-index-url = https://repos.libdom.net/
+```
+
+## Install via pip
+```
+pip install knox-source-data-io
 ```
 
 ## Build
