@@ -54,7 +54,7 @@ class IOHandler:
         wrapper = Wrapper()
         wrapper.generator = self.generator
         wrapper.schema_location = self.schema
-        wrapper.type = "article"
+        wrapper.type = obj.__class__.__name__
         wrapper.set_content(obj)
         data = wrapper.to_json()
 
@@ -88,7 +88,7 @@ class IOHandler:
         try:
             data = json.load(json_file)
             # TODO validate json against schema.
-            # response = requests.get("https://knox.libdom.net/schema/article.schema.json")
+            # response = requests.get("https://knox.libdom.net/schema/publication.schema.json")
             # schema = response.json()
 
             the_obj = json.loads(json.dumps(data), object_hook=IOHandler.convert_dict_to_obj)

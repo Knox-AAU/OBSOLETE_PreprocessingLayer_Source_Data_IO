@@ -2,7 +2,7 @@ from io import StringIO
 
 import pytest
 
-from knox_source_data_io.IOHandler import *
+from knox_source_data_io.io_handler import *
 from knox_source_data_io.models.publication import Publication, Article, Byline, Paragraph
 
 
@@ -94,7 +94,7 @@ class TestIOHandler:
         article.headline = "En god artikel"
         article.subhead = ""
         article.lead = ""
-        article.byline = Byline(name="Thomas", email="thomas@tlorentzen.net")
+        article.byline = Byline(name="Hans", email="hans@hansen.net")
         article.extracted_from.append("Some file")
         article.confidence = 1.0
         article.id = 0
@@ -122,7 +122,7 @@ class TestIOHandler:
         article.headline = "En god artikel"
         article.subhead = ""
         article.lead = ""
-        article.byline = Byline(name="Thomas", email="thomas@tlorentzen.net")
+        article.byline = Byline(name="Hans", email="hans@hansen.net")
         article.extracted_from.append("Some file")
         article.confidence = 1.0
         article.id = 0
@@ -145,7 +145,7 @@ class TestIOHandler:
         article.headline = "En god artikel"
         article.subhead = ""
         article.lead = ""
-        article.byline = Byline(name="Thomas", email="thomas@tlorentzen.net")
+        article.byline = Byline(name="Hans", email="hans@hansen.net")
         article.extracted_from.append("Some file")
         article.confidence = 1.0
         article.id = 0
