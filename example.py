@@ -1,32 +1,21 @@
-from extras.publication import *
 from knox_source_data_io.io_handler import *
+from knox_source_data_io.models.model import Model
 import os
 
-# Generate publication
-publication = Publication()
-publication.publisher = "Nordjyske Medier"
-publication.published_at = "Some time"
-publication.publication = "A newspaper"
-publication.pages = 0
 
-# Generate article
-article = Article()
-article.headline = "Some headline..."
-article.subhead = ""
-article.lead = ""
-article.byline = Byline(name="Hans", email="hans@hansen.net")
-article.extracted_from.append("/path/to/source-file")
-article.confidence = 1.0
-article.id = 0
-article.page = 0
+class SubModelClass(Model):
+    name: str
+    email: str
 
-for x in range(10):
-    p = Paragraph()
-    p.kind = "paragraph"
-    p.value = f'This is paragraph number {x}'
-    article.add_paragraph(p)
+    def __init__(self, values: dict = None, **kwargs):
+        values = values if values is not None else kwargs
+        self.name = values.get("name", "")
+        self.email = values.get("email", "")
 
-publication.add_article(article)
+
+export_able_object = SubModelClass()
+export_able_object.name = "Hans"
+export_able_object.email = "hans@hansen.dk"
 
 # Generate
 handler = IOHandler(Generator(app="This app", version=1.0), "link/to/schema.json")
@@ -35,10 +24,20 @@ filename = os.path.join(dirname, 'output.json')
 
 # Serialize object to json
 with open(filename, 'w', encoding='utf-8') as outfile:
-    handler.write_json(publication, outfile)
+    handler.write_json(export_able_object, outfile)
 print("Json written to output.json")
 
 # Deserialize json to object
 with open(filename, 'r', encoding='utf-8') as json_file:
     obj: Wrapper = handler.read_json(json_file)
 print("Json read from output.json")
+
+
+
+
+
+
+
+
+
+
