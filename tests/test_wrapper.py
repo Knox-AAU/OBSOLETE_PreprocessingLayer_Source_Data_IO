@@ -1,6 +1,6 @@
 import json
 import pytest
-from knox_source_data_io.models.publication import Publication
+from extras.publication import Publication
 from knox_source_data_io.models.wrapper import Wrapper
 
 

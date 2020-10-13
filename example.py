@@ -1,4 +1,4 @@
-from knox_source_data_io.models.publication import *
+from extras.publication import *
 from knox_source_data_io.io_handler import *
 import os
 

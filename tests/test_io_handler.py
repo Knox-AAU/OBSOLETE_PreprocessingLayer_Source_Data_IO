@@ -3,7 +3,7 @@ from io import StringIO
 import pytest
 
 from knox_source_data_io.io_handler import *
-from knox_source_data_io.models.publication import Publication, Article, Byline, Paragraph
+# from extras.publication import Publication, Article, Byline, Paragraph
 
 
 class TestIOHandler:
@@ -13,7 +13,7 @@ class TestIOHandler:
         self.handler = IOHandler(Generator(app="This app", version=1.0), "Schema")
 
     def test_write_json_returns_valid_json_given_model_subclass(self):
-        content_obj = Publication()
+        content_obj = SubModelObj()
 
         # Create StringIO object to store the output of the method
         outfile = StringIO()
@@ -34,7 +34,7 @@ class TestIOHandler:
         assert True
 
     def test_write_json_returns_nothing_if_obj_is_not_model_subclass(self):
-        content_obj = Paragraph()
+        content_obj = SubModelObj()
 
         # Create StringIO object to store the output of the method
         outfile = StringIO()
@@ -55,7 +55,7 @@ class TestIOHandler:
             assert True
 
     def test_convert_to_dict_adds_all_variables_from_the_obj_to_the_dict(self):
-        publication = Publication()
+        publication = SubModelObj()
         output = IOHandler.convert_obj_to_dict(publication)
 
         # Check if all attributes are represented in the dictionary
@@ -67,14 +67,14 @@ class TestIOHandler:
         assert True
 
     def test_convert_to_dict_adds_class_reference_to_dict(self):
-        publication = Publication()
+        publication = SubModelObj()
         output = IOHandler.convert_obj_to_dict(publication)
 
         if output.get("__class__") != publication.__class__.__name__:
             pytest.fail(f"The dictionary does not contain reference to originating class")
 
     def test_convert_to_dict_adds_module_reference_to_dict(self):
-        publication = Publication()
+        publication = SubModelObj()
         output = IOHandler.convert_obj_to_dict(publication)
 
         if output.get("__module__") != publication.__module__:
@@ -83,85 +83,37 @@ class TestIOHandler:
         assert True
 
     def test_dict_to_obj_receives_dict_with_class_and_returns_obj_of_class(self):
-        publication = Publication()
-        publication.publisher = "Nordjyske Medie"
-        publication.published_at = "Some time"
-        publication.publication = "A newspaper"
-        publication.pages = 0
+        sub_model = SubModelObj()
+        sub_model.name = "Hans Hansen"
+        sub_model.email = "hans@hansen.dk"
 
-        # Generate article
-        article = Article()
-        article.headline = "En god artikel"
-        article.subhead = ""
-        article.lead = ""
-        article.byline = Byline(name="Hans", email="hans@hansen.net")
-        article.extracted_from.append("Some file")
-        article.confidence = 1.0
-        article.id = 0
-        article.page = 0
-
-        for x in range(10):
-            p = Paragraph()
-            p.kind = "paragraph"
-            p.value = f'This is paragraph number {x}'
-            article.add_paragraph(p)
-
-        publication.add_article(article)
-
-        dictionary = publication.__dict__
-        dictionary["__class__"] = "Publication"
-        dictionary["__module__"] = "knox_source_data_io.models.publication"
+        dictionary = sub_model.__dict__
+        dictionary["__class__"] = "SubModelObj"
+        dictionary["__module__"] = "tests.test_io_handler"
 
         output = IOHandler.convert_dict_to_obj(dictionary)
-        if not isinstance(output, Publication):
+        if not isinstance(output, SubModelObj):
             pytest.fail("The output is not of the given type")
         assert True
 
     def test_dict_to_obj_receives_dict_without_class_and_returns_the_same_dictionary(self):
-        article = Article()
-        article.headline = "En god artikel"
-        article.subhead = ""
-        article.lead = ""
-        article.byline = Byline(name="Hans", email="hans@hansen.net")
-        article.extracted_from.append("Some file")
-        article.confidence = 1.0
-        article.id = 0
-        article.page = 0
-        dictionary = article.__dict__
+        sub_model = SubModelObj()
+        sub_model.name = "Hans Hansen"
+        sub_model.email = "hans@hansen.dk"
+        dictionary = sub_model.__dict__
 
         output = IOHandler.convert_dict_to_obj(dictionary)
 
         assert output == dictionary
 
     def test_dict_to_obj_receives_dict_with_class_and_returns_obj_with_same_variables(self):
-        publication = Publication()
-        publication.publisher = "Nordjyske Medie"
-        publication.published_at = "Some time"
-        publication.publication = "A newspaper"
-        publication.pages = 0
+        sub_model = SubModelObj()
+        sub_model.name = "Hans Hansen"
+        sub_model.email = "hans@hansen.dk"
 
-        # Generate article
-        article = Article()
-        article.headline = "En god artikel"
-        article.subhead = ""
-        article.lead = ""
-        article.byline = Byline(name="Hans", email="hans@hansen.net")
-        article.extracted_from.append("Some file")
-        article.confidence = 1.0
-        article.id = 0
-        article.page = 0
-
-        for x in range(10):
-            p = Paragraph()
-            p.kind = "paragraph"
-            p.value = f'This is paragraph number {x}'
-            article.add_paragraph(p)
-
-        publication.add_article(article)
-
-        dictionary = publication.__dict__
-        dictionary["__class__"] = "Publication"
-        dictionary["__module__"] = "knox_source_data_io.models.publication"
+        dictionary = sub_model.__dict__
+        dictionary["__class__"] = "SubModelObj"
+        dictionary["__module__"] = "tests.test_io_handler"
 
         output = IOHandler.convert_dict_to_obj(dictionary)
         for var in dictionary.keys():
@@ -169,3 +121,13 @@ class TestIOHandler:
                 pytest.fail("The output is not of the given type")
 
         assert True
+
+
+class SubModelObj(Model):
+    name: str
+    email: str
+
+    def __init__(self, values: dict = None, **kwargs):
+        values = values if values is not None else kwargs
+        self.name = values.get("name", "")
+        self.email = values.get("email", "")
