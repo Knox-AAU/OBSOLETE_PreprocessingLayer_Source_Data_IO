@@ -1,6 +1,5 @@
 from knox_source_data_io.models.model import Model
 
-
 class Byline:
     """
     A class used to represent a Byline
@@ -100,10 +99,7 @@ class Article:
     lead: str
     paragraphs: list
     confidence: float
-    publisher: str
-    published_at: str
-    publication: str
-    extracted_from: list
+    extracted_from: list = []
     page: int
 
     def __init__(self, values: dict = None, **kwargs):
@@ -117,17 +113,15 @@ class Article:
         """
 
         values = values if values is not None else kwargs
-        self.extracted_from = values.get("extracted_from", [])
+        if isinstance(values.get("extracted_from", []), list):
+            self.extracted_from = values.get("extracted_from", [])
         self.confidence = values.get("confidence", 1.0)
-        self.publisher = values.get("publisher", "")
-        self.published_at = values.get("published_at", "")
-        self.publication = values.get("publication", "")
         self.page = values.get("page", 0)
-        self.id = values.get("id", 0)
+        self.id = values.get("id", None)
         self.headline = values.get("title", "")
         self.subhead = values.get("subhead", "")
-        self.byline = values.get("byline", Byline())
-        self.lead = values.get("lead", "")
+        self.byline = values.get("byline", None)
+        self.lead = values.get("lead", None)
         self.paragraphs = values.get("paragraphs", [])
 
     def add_paragraph(self, paragraph: Paragraph):
@@ -143,6 +137,31 @@ class Article:
 
         if isinstance(paragraph, Paragraph):
             self.paragraphs.append(paragraph)
+
+    def add_byline(self, byline_name: str, byline_email: str = None):
+        """Add a byline to the article
+
+        It simply adds a byline to the article.
+
+        Parameters
+        ----------
+        byline_name : str
+            the name of the writer
+        byline_email : str
+            the email of the writer
+        """
+        self.byline = Byline(name=byline_name, email=byline_email)
+
+    def add_extracted_from(self, path: str):
+        """Add the path to the file used for extraction.
+
+        Parameters
+        ----------
+        path : str
+            the file path
+        """
+        if isinstance(self.extracted_from, list):
+            self.extracted_from.append(path)
 
 
 class Publication(Model):

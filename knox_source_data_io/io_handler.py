@@ -21,7 +21,7 @@ class IOHandler:
     schema: str
     generator: Generator
 
-    def __init__(self, generator: Generator, schema: str):
+    def __init__(self, generator: Generator, schema):
         self.schema = schema
         self.generator = generator
 
@@ -116,6 +116,14 @@ class IOHandler:
 
         #  Populate the dictionary with object properties
         obj_dict.update(obj.__dict__)
+
+        values_to_remove = []
+
+        for entry in obj_dict:
+            if obj_dict[entry] == None:
+                values_to_remove.append(entry)
+        for entry in values_to_remove:
+            obj_dict.__delitem__(entry)
 
         return obj_dict
 

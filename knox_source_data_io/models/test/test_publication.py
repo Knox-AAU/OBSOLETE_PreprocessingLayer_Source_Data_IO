@@ -1,7 +1,7 @@
 import pytest
 import json
 
-from extras.publication import Publication, Article, Paragraph
+from knox_source_data_io.models.publication import Publication, Article, Paragraph
 
 
 class TestPublication:
