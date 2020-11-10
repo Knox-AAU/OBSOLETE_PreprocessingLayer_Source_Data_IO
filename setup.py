@@ -9,7 +9,7 @@ setuptools.setup(
     description='Package for important and exporting JSON files generated based on the source data for the Knox project',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version='0.0.4',
+    version='0.0.5',
     url='https://repos.libdom.net/knox_source_data_io',
     author='Niels F. S. Vistisen, Thomas G. Lorentzen',
     author_email='nvisti18@student.aau.dk, tglo18@student.aau.dk',

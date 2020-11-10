@@ -150,7 +150,8 @@ class Article:
         byline_email : str
             the email of the writer
         """
-        self.byline = Byline(name=byline_name, email=byline_email)
+        if isinstance(byline_name, str):
+            self.byline = Byline(name=byline_name, email=byline_email)
 
     def add_extracted_from(self, path: str):
         """Add the path to the file used for extraction.
@@ -160,7 +161,7 @@ class Article:
         path : str
             the file path
         """
-        if isinstance(self.extracted_from, list):
+        if isinstance(self.extracted_from, list) and isinstance(path, str) and path not in self.extracted_from:
             self.extracted_from.append(path)
 
 
