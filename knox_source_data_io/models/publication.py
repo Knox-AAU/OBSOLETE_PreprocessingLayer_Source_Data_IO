@@ -118,7 +118,7 @@ class Article:
         self.confidence = values.get("confidence", 1.0)
         self.page = values.get("page", 0)
         self.id = values.get("id", None)
-        self.headline = values.get("title", "")
+        self.headline = values.get("headline", "")
         self.subhead = values.get("subhead", "")
         self.byline = values.get("byline", None)
         self.lead = values.get("lead", None)
