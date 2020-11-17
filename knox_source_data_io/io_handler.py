@@ -53,7 +53,7 @@ class IOHandler:
 
         wrapper = Wrapper()
         wrapper.generator = self.generator
-        wrapper.schema_location = self.schema
+        wrapper.schema = self.schema
         wrapper.type = obj.__class__.__name__
         wrapper.set_content(obj)
         data = wrapper.to_json()

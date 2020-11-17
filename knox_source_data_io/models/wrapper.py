@@ -48,10 +48,8 @@ class Wrapper:
     ----------
     type : str
         the type of object wrapped
-    schemaLocation : str
+    schema : str
         the schema that the exported file comply with.
-    schemaVersion : float
-        the schema version
     generator : Generator
         the generator information object
     content :
@@ -59,8 +57,7 @@ class Wrapper:
     """
 
     type: str
-    schema_location: str
-    schema_version: float
+    schema: str
     generator: Generator
     content: Model
 
@@ -76,8 +73,7 @@ class Wrapper:
 
         values = values if values is not None else kwargs
         self.type = values.get("type", "")
-        self.schema_location = values.get("schema_location", "")
-        self.schema_version = values.get("schema_version", 0.0)
+        self.schema = values.get("schema", "")
         self.generator = values.get("generator", Generator())
         self.content = values.get("content", None)
 
