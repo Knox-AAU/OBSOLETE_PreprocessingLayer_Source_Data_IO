@@ -28,3 +28,23 @@ It can then be loaded into the current project by running the command:
 ```
 pip install -r requirements.txt
 ```
+
+## Python installation linux
+```
+// Install latest python (replace version)
+sudo apt install python3.9 python3.9-dev python3.9-distutils python3.9-venv
+
+// Install pip
+python3.9 -m pip install pip
+
+// Generate virtual environment
+cd /project/folder
+python3.9 -m venv venv
+
+// Activate virtual environment
+cd /project/folder
+source venv/bin/activate
+
+// Deactivate virtual environment
+deactivate
+```
