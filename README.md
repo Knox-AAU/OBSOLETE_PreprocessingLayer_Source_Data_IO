@@ -32,6 +32,7 @@ pip install -r requirements.txt
 ## Python installation linux
 ```
 // Install latest python (replace version)
+sudo apt install build-essential libssl-dev
 sudo apt install python3.9 python3.9-dev python3.9-distutils python3.9-venv
 
 // Install pip
@@ -44,6 +45,7 @@ python3.9 -m venv venv
 // Activate virtual environment
 cd /project/folder
 source venv/bin/activate
+pip3.9 install wheel
 
 // Deactivate virtual environment
 deactivate
