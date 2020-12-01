@@ -5,7 +5,7 @@ First add the custom index url to your pip.conf run `pip3.8 config list -v` to f
 
 ```
 [global]
-extra-index-url = https://repos.libdom.net/
+extra-index-url = https://repos.knox.cs.aau.dk/
 ```
 
 ### Install via pip
