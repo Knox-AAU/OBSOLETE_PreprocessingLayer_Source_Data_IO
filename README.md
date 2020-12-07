@@ -29,7 +29,7 @@ It can then be loaded into the current project by running the command:
 pip install -r requirements.txt
 ```
 
-## Python installation linux
+## Python installation Linux
 ```
 // Install latest python (replace version)
 sudo apt install build-essential libssl-dev
