@@ -44,13 +44,46 @@ class TestIOHandler:
         except ValueError as e:
             assert str(e) == "Object need to be a subclass of Model..."
 
-        assert True
+    def test_write_json_adds_correct_meta_data(self):
+        content_obj = SubModelObj()
+
+        # Create StringIO object to store the output of the method
+        outfile = StringIO()
+
+        self.handler.write_json(content_obj, outfile)
+
+        outfile.seek(0)
+        json_content = json.loads(outfile.read())
+
+        generated_generator = Generator(app=json_content['generator']['app'], version=json_content['generator']['version'])
+        generated_schema_location = json_content['schema']
+        generated_type = json_content['type']
+
+        assert generated_generator.app == "This app" and generated_generator.version == 1.0\
+               and generated_schema_location == "Schema"\
+               and generated_type == content_obj.__class__.__name__
+
+    def test_write_json_generates_json_with_the_correct_data(self):
+        content_obj = SubModelObj()
+        content_obj.email = "email@comp.com"
+        content_obj.name = "name"
+
+        # Create StringIO object to store the output of the method
+        outfile = StringIO()
+
+        self.handler.write_json(content_obj, outfile)
+
+        outfile.seek(0)
+        generated_json_content = json.loads(outfile.read())
+
+        expected_json_content = content_obj.to_json()
+
+        assert generated_json_content["content"]["email"] == json.loads(expected_json_content)["email"] and generated_json_content["content"]["name"] == json.loads(expected_json_content)["name"]
 
     def test_read_json_fails_due_to_file_not_existing(self):
         try:
             with open("/this/path/does/not/exist/and/will/cause/the/method/to/fail", 'r') as json_file:
                 self.handler.read_json(json_file)
-            assert False
         except OSError:
             assert True
 
