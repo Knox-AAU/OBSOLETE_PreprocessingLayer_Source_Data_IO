@@ -1,6 +1,10 @@
 # Source Data IO
 This module collects the fucntionality to convert a Python object to a JSON file and back. The module builds on defined JSOn schemas that are used to generalize the files that should be written and read using the module. 
-Additional schemas and associated Python objects can be added. This can be done by defining a JSON schema and a Python object that extends the ``Model`` class. This ensures that the object can be converted to and from a JSON file using the module. By extending the ``Model`` class, the resulting JSON file will contain meta-data about the genration of it self, as well as the object converted.
+
+## Add new data type
+Additional schemas and associated Python objects can be added to the module. This can be done by defining a JSON schema and a Python object that extends the ``Model`` class. This ensures that the object can be converted to and from a JSON file using the module.
+
+By extending the ``Model`` class, the resulting JSON file will contain meta-data about the genration of itself, as well as the object converted.
 
 ## Using
 First add the custom index url to your pip.conf run `pip3.8 config list -v` to find the approperiate config file. Insert the following:
