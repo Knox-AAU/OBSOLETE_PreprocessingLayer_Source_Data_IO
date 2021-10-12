@@ -2,6 +2,7 @@ from knox_source_data_io.models.wrapper import *
 from os import path
 import importlib
 import json
+import requests
 
 
 class IOHandler:
@@ -155,3 +156,14 @@ class IOHandler:
         else:
             obj = our_dict
         return obj
+
+    def post_json(json):
+        url = 'http://knox-node03.srv.aau.dk/'
+        x = requests.post(url, data = json)
+        print(x.text)
+
+    def post_json_list(self, json_file_objects):
+        for j in json_file_objects:
+            self.post_json(j)
+    
+    
