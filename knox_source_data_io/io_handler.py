@@ -2,6 +2,7 @@ from knox_source_data_io.models.wrapper import *
 from os import path
 import importlib
 import json
+import requests
 
 
 class IOHandler:
@@ -155,3 +156,21 @@ class IOHandler:
         else:
             obj = our_dict
         return obj
+
+    @staticmethod
+    def post_json(json):
+        """
+        method makes POST request to knowledge layer with a given JSON object.
+        """
+        url = 'http://knox-node03.srv.aau.dk/'
+        x = requests.post(url, data = json)
+
+    @staticmethod
+    def post_json_list(self, json_file_objects):
+        """
+        calls post_json in a loop. Used if you have multiple JSON objects to POST.
+        """
+        for j in json_file_objects:
+            self.post_json(j)
+    
+    
