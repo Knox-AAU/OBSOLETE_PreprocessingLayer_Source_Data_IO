@@ -177,12 +177,13 @@ class IOHandler:
         '''
         Method to validate that given json is either a publication or manual,
         and to check that it satisfies the schema for that type.
-        @Param
+        @param json_obj: the json should be validated
         '''
         script_dir = path.dirname(__file__)
-        type = json_obj["type"]
+        # type is manual or publication
+        type = json_obj["type"] 
         if type == "Publication":
-            print("pup")
+            #open to schema for publications
             j = open(path.join(script_dir, '../schemas/publication.schema.json'))
             json_schema = json.load(j)
             j.close()
@@ -191,6 +192,7 @@ class IOHandler:
             except jsonschema.exceptions.ValidationError as err:
                 raise Exception("Invalid json")
         elif type == "Schema_Manual":
+            #open to schema for manuals
             j = open(path.join(script_dir, '../schemas/manual.schema.json'))
             json_schema = json.load(j)
             j.close()
