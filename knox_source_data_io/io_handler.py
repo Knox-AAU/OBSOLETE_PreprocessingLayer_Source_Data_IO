@@ -1,9 +1,9 @@
 from knox_source_data_io.models.wrapper import *
-from os import path
+from os import close, path
 import importlib
 import json
 import requests
-
+import jsonschema 
 
 class IOHandler:
     """
@@ -155,14 +155,13 @@ class IOHandler:
             obj = class_(**our_dict)
         else:
             obj = our_dict
-        return obj
+        return obj  
 
     @staticmethod
-    def post_json(json):
+    def post_json(json, url):
         """
         method makes POST request to knowledge layer with a given JSON object.
         """
-        url = 'http://knox-node03.srv.aau.dk/'
         x = requests.post(url, data = json)
 
     @staticmethod
@@ -172,5 +171,33 @@ class IOHandler:
         """
         for j in json_file_objects:
             self.post_json(j)
-    
-    
+
+    @staticmethod
+    def validate_json(json_obj):
+        '''
+        Method to validate that given json is either a publication or manual,
+        and to check that it satisfies the schema for that type.
+        @Param
+        '''
+        script_dir = path.dirname(__file__)
+        type = json_obj["type"]
+        if type == "Publication":
+            print("pup")
+            j = open(path.join(script_dir, '../schemas/publication.schema.json'))
+            json_schema = json.load(j)
+            j.close()
+            try:
+                jsonschema.validate(instance=json_obj, schema=json_schema)
+            except jsonschema.exceptions.ValidationError as err:
+                raise Exception("Invalid json")
+        elif type == "Schema_Manual":
+            j = open(path.join(script_dir, '../schemas/manual.schema.json'))
+            json_schema = json.load(j)
+            j.close()
+            try:
+                jsonschema.validate(instance=json_obj, schema=json_schema)
+            except jsonschema.exceptions.ValidationError as err:
+                raise Exception("Invalid json")
+        else:
+            raise Exception("invalid type field in json")
+        return True
