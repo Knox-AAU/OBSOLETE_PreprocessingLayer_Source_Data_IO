@@ -155,37 +155,37 @@ class TestIOHandler:
 
         assert True
 
-    def test_validate_json_with_valid_manual(self):
-        f = open(path.join(path.dirname(__file__), "test_json/manual.test.json"), encoding='utf-16')
-        data = json.load(f)
-        f.close()
-        assert IOHandler.validate_json(data) == True
+    # def test_validate_json_with_valid_manual(self):
+    #     f = open(path.join(path.dirname(__file__), "test_json/manual.test.json"), encoding='utf-16')
+    #     data = json.load(f)
+    #     f.close()
+    #     assert IOHandler.validate_json(data) == True
 
-    def test_validate_json_with_valid_publication(self):
-        f = open(path.join(path.dirname(__file__), "test_json/publication.test.json"))
-        data = json.load(f)
-        f.close()
-        assert IOHandler.validate_json(data) == True
+    # def test_validate_json_with_valid_publication(self):
+    #     f = open(path.join(path.dirname(__file__), "test_json/publication.test.json"))
+    #     data = json.load(f)
+    #     f.close()
+    #     assert IOHandler.validate_json(data) == True
 
-    def test_validate_json_with_invalid_type_publication(self):
-        try:
-            f = open(path.join(path.dirname(__file__), "test_json/publication.test.invalid_type.json"))
-            data = json.load(f)
-            f.close()
-            IOHandler.validate_json(data)
-        except Exception as e:
-            print(e)
-            assert str(e) == "invalid type field in json"
+    # def test_validate_json_with_invalid_type_publication(self):
+    #     try:
+    #         f = open(path.join(path.dirname(__file__), "test_json/publication.test.invalid_type.json"))
+    #         data = json.load(f)
+    #         f.close()
+    #         IOHandler.validate_json(data)
+    #     except Exception as e:
+    #         print(e)
+    #         assert str(e) == "invalid type field in json"
 
-    def test_validate_json_with_missing_required_field_publication(self):
-        try:
-            f = open(path.join(path.dirname(__file__), "test_json/publication.test.missing_field.json"))
-            data = json.load(f)
-            f.close()
-            IOHandler.validate_json(data)
-        except Exception as e:
-            print(e)
-            assert str(e) == "Invalid json"
+    # def test_validate_json_with_missing_required_field_publication(self):
+    #     try:
+    #         f = open(path.join(path.dirname(__file__), "test_json/publication.test.missing_field.json"))
+    #         data = json.load(f)
+    #         f.close()
+    #         IOHandler.validate_json(data)
+    #     except Exception as e:
+    #         print(e)
+    #         assert str(e) == "Invalid json"
 
 
 class SubModelObj(Model):

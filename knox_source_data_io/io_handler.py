@@ -172,34 +172,16 @@ class IOHandler:
         for j in json_file_objects:
             self.post_json(j)
 
-    @staticmethod
-    def validate_json(json_obj):
+    def validate_json(json_obj, json_schema):
         '''
-        Method to validate that given json is either a publication or manual,
-        and to check that it satisfies the schema for that type.
-        @param json_obj: the json should be validated
+        Method to check that it satisfies the schema for that type.
+        @param json_obj: the json to be validated
+        @param json_schema: path to schema that json_obj should be validated against
         '''
-        script_dir = path.dirname(__file__)
-        # type is manual or publication
-        type = json_obj["type"] 
-        if type == "Publication":
-            #open to schema for publications
-            j = open(path.join(script_dir, '../schemas/publication.schema.json'))
-            json_schema = json.load(j)
-            j.close()
+        with open(json_schema) as j:
+            schema = json.load(j)
             try:
-                jsonschema.validate(instance=json_obj, schema=json_schema)
-            except jsonschema.exceptions.ValidationError as err:
+                jsonschema.validate(instance=json_obj, schema=schema)
+            except jsonschema.exceptions.ValidationError:
                 raise Exception("Invalid json")
-        elif type == "Schema_Manual":
-            #open to schema for manuals
-            j = open(path.join(script_dir, '../schemas/manual.schema.json'))
-            json_schema = json.load(j)
-            j.close()
-            try:
-                jsonschema.validate(instance=json_obj, schema=json_schema)
-            except jsonschema.exceptions.ValidationError as err:
-                raise Exception("Invalid json")
-        else:
-            raise Exception("invalid type field in json")
-        return True
+            return True
