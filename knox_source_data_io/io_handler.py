@@ -172,6 +172,7 @@ class IOHandler:
         for j in json_file_objects:
             self.post_json(j)
 
+    @staticmethod
     def validate_json(json_obj, json_schema):
         '''
         Method to check that it satisfies the schema for that type.
