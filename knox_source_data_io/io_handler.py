@@ -176,6 +176,7 @@ class IOHandler:
         '''
         Method to check that it satisfies the schema for that type.
         @param json_obj: the json to be validated
+        @param json_schema: path to schema that json_obj should be validated against
         '''
         with open(json_schema) as j:
             schema = json.load(j)
