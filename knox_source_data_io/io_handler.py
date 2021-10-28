@@ -168,7 +168,7 @@ class IOHandler:
         method makes POST request to knowledge layer with a given JSON object.
         """
         x = requests.post(url, data = json)
-        if x.statis_code != 200:
+        if x.status_code != 200:
             x.raise_for_status()
 
     @staticmethod
