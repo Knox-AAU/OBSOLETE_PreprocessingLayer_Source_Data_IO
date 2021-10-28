@@ -43,6 +43,11 @@ class IOHandler:
             If the obj is not a subclass of Model
         OSError
             If write the json file fails
+
+        Returns
+        -------
+        data
+        json object that was written to out
         """
 
         if not issubclass(type(obj), Model):
@@ -61,7 +66,7 @@ class IOHandler:
 
         try:
             outfile.write(data)
-            return True
+            return data
         except OSError:
             raise Exception("Error writing json...")
 
@@ -163,14 +168,16 @@ class IOHandler:
         method makes POST request to knowledge layer with a given JSON object.
         """
         x = requests.post(url, data = json)
+        if x.statis_code != 200:
+            x.raise_for_status()
 
     @staticmethod
-    def post_json_list(self, json_file_objects):
+    def post_json_list(self, json, url):
         """
         calls post_json in a loop. Used if you have multiple JSON objects to POST.
         """
-        for j in json_file_objects:
-            self.post_json(j)
+        for j in json:
+            IOHandler.post_json(j, url)
 
     @staticmethod
     def validate_json(json_obj, json_schema):
